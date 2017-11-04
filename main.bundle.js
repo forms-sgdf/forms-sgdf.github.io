@@ -23,19 +23,27 @@ webpackEmptyAsyncContext.id = "../../../../../src/$$_gendir lazy recursive";
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_survey_angular__ = __webpack_require__("../../../../survey-angular/survey.angular.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_survey_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_survey_angular__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_survey_angular__ = __webpack_require__("../../../../survey-angular/survey.angular.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_survey_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_survey_angular__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 
 
-__WEBPACK_IMPORTED_MODULE_1_survey_angular__["Survey"].cssType = "bootstrap";
+
+__WEBPACK_IMPORTED_MODULE_2_survey_angular__["Survey"].cssType = "bootstrap";
 var AppComponent = (function () {
-    function AppComponent() {
+    function AppComponent(route) {
+        var _this = this;
+        this.route = route;
+        this.sendResultId = '4234bd81-d232-4dd1-9890-827c176a85d9';
         this.json = {
             completeText: "Valider",
             pages: [
@@ -209,24 +217,36 @@ var AppComponent = (function () {
                 }
             ]
         };
+        this.route
+            .queryParams
+            .subscribe(function (params) {
+            if (params.formId != null && params.sendResultId != null) {
+                _this.json = {
+                    surveyId: params.formId
+                };
+                _this.sendResultId = params.sendResultId;
+            }
+        });
     }
     AppComponent.prototype.ngOnInit = function () {
-        var survey = new __WEBPACK_IMPORTED_MODULE_1_survey_angular__["ReactSurveyModel"](this.json);
+        var _this = this;
+        var survey = new __WEBPACK_IMPORTED_MODULE_2_survey_angular__["ReactSurveyModel"](this.json);
         survey.onComplete.add(function (survey) {
-            console.log('SEND RESULT !');
-            survey.sendResult('4234bd81-d232-4dd1-9890-827c176a85d9');
+            survey.sendResult(_this.sendResultId);
         });
-        __WEBPACK_IMPORTED_MODULE_1_survey_angular__["SurveyNG"].render("surveyElement", { model: survey });
+        __WEBPACK_IMPORTED_MODULE_2_survey_angular__["SurveyNG"].render("surveyElement", { model: survey });
     };
     return AppComponent;
 }());
 AppComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'app-root',
         template: "\n  <div class=\"survey-container contentcontainer codecontainer\"><div id=\"surveyElement\"></div></div>"
-    })
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object])
 ], AppComponent);
 
+var _a;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -254,7 +274,7 @@ var AppModule = (function () {
     return AppModule;
 }());
 AppModule = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["L" /* NgModule */])({
+    Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["M" /* NgModule */])({
         declarations: [
             __WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]
         ],
@@ -301,7 +321,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_23" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });
