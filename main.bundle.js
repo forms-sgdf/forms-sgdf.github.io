@@ -40,9 +40,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 __WEBPACK_IMPORTED_MODULE_2_survey_angular__["Survey"].cssType = "bootstrap";
 var AppComponent = (function () {
+    // ngOnInit() {
+    //   this.survey = new Survey.ReactSurveyModel(this.json);
+    //   this.survey.onComplete.add((survey) => {
+    //     survey.sendResult(this.sendResultId);
+    //   });
+    //   Survey.SurveyNG.render("surveyElement", { model: this.survey });
+    // }
     function AppComponent(route) {
         var _this = this;
         this.route = route;
+        this.isLoading = true;
+        this.survey = null;
         this.sendResultId = '4234bd81-d232-4dd1-9890-827c176a85d9';
         this.json = {
             completeText: "Valider",
@@ -220,28 +229,27 @@ var AppComponent = (function () {
         this.route
             .queryParams
             .subscribe(function (params) {
+            console.log(params);
             if (params.formId != null && params.sendResultId != null) {
                 _this.json = {
                     surveyId: params.formId
                 };
                 _this.sendResultId = params.sendResultId;
+                _this.survey = new __WEBPACK_IMPORTED_MODULE_2_survey_angular__["ReactSurveyModel"](_this.json);
+                _this.survey.onComplete.add(function (survey) {
+                    survey.sendResult(_this.sendResultId);
+                });
+                __WEBPACK_IMPORTED_MODULE_2_survey_angular__["SurveyNG"].render("surveyElement", { model: _this.survey });
+                _this.isLoading = false;
             }
         });
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        var survey = new __WEBPACK_IMPORTED_MODULE_2_survey_angular__["ReactSurveyModel"](this.json);
-        survey.onComplete.add(function (survey) {
-            survey.sendResult(_this.sendResultId);
-        });
-        __WEBPACK_IMPORTED_MODULE_2_survey_angular__["SurveyNG"].render("surveyElement", { model: survey });
-    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
         selector: 'app-root',
-        template: "\n  <div class=\"survey-container contentcontainer codecontainer\"><div id=\"surveyElement\"></div></div>"
+        template: "\n  <div class=\"survey-container contentcontainer codecontainer\"><div id=\"surveyElement\"></div></div>\n  <h4 *ngIf=\"isLoading\">Chargement ...</h4>"
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["a" /* ActivatedRoute */]) === "function" && _a || Object])
 ], AppComponent);
@@ -285,7 +293,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* RouterModule */].forRoot([{
                     path: '',
                     component: __WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]
-                }])
+                }], { useHash: true })
         ],
         providers: [],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* AppComponent */]]
