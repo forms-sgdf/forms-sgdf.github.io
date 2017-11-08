@@ -130,15 +130,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 __WEBPACK_IMPORTED_MODULE_2_survey_angular__["Survey"].cssType = "bootstrap";
 var FormComponent = (function () {
-    // ngOnInit() {
-    //   this.survey = new Survey.ReactSurveyModel(this.json);
-    //   this.survey.onComplete.add((survey) => {
-    //     survey.sendResult(this.sendResultId);
-    //   });
-    //   Survey.SurveyNG.render("surveyElement", { model: this.survey });
-    // }
     function FormComponent(route) {
-        var _this = this;
         this.route = route;
         this.isLoading = true;
         this.survey = null;
@@ -316,6 +308,9 @@ var FormComponent = (function () {
                 }
             ]
         };
+    }
+    FormComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.route
             .queryParams
             .subscribe(function (params) {
@@ -333,7 +328,7 @@ var FormComponent = (function () {
                 _this.isLoading = false;
             }
         });
-    }
+    };
     return FormComponent;
 }());
 FormComponent = __decorate([
